@@ -13,7 +13,6 @@
 		A8B86A4D240B1C540071F74D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8B86A4B240B1C540071F74D /* Main.storyboard */; };
 		A8B86A4F240B1C5A0071F74D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8B86A4E240B1C5A0071F74D /* Assets.xcassets */; };
 		A8B86A52240B1C5A0071F74D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8B86A50240B1C5A0071F74D /* LaunchScreen.storyboard */; };
-		A8B86A5A2415D02D0071F74D /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B86A592415D02D0071F74D /* Item.swift */; };
 		A8FDDB3B242C4CBF00399BF5 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A8FDDB39242C4CBF00399BF5 /* DataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
@@ -26,7 +25,6 @@
 		A8B86A4E240B1C5A0071F74D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A8B86A51240B1C5A0071F74D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A8B86A53240B1C5A0071F74D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A8B86A592415D02D0071F74D /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		A8FDDB3A242C4CBF00399BF5 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,7 +71,6 @@
 			isa = PBXGroup;
 			children = (
 				A8FDDB39242C4CBF00399BF5 /* DataModel.xcdatamodeld */,
-				A8B86A592415D02D0071F74D /* Item.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -168,7 +165,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A8B86A5A2415D02D0071F74D /* Item.swift in Sources */,
 				A8FDDB3B242C4CBF00399BF5 /* DataModel.xcdatamodeld in Sources */,
 				A8B86A4A240B1C540071F74D /* TodoListViewController.swift in Sources */,
 				A8B86A46240B1C540071F74D /* AppDelegate.swift in Sources */,
