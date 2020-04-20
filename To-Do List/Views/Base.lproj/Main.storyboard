@@ -6,6 +6,44 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Categories-->
+        <scene sceneID="DC1-6f-pAG">
+            <objects>
+                <tableViewController id="b3Z-nV-408" customClass="CategoryViewController" customModule="To_Do_List" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="jcU-9t-G7T">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" id="a11-xs-ctd">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="a11-xs-ctd" id="Igd-61-JRU">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="b3Z-nV-408" id="ZTC-SV-M8R"/>
+                            <outlet property="delegate" destination="b3Z-nV-408" id="FKx-eY-lBr"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Categories" id="aJR-4B-7gM">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Qs0-u8-2Os">
+                            <connections>
+                                <action selector="addButtonPressed:" destination="b3Z-nV-408" id="ECh-fP-tGW"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="GTk-XX-oCL" kind="show" identifier="goToItem" id="wRv-zj-VuR"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZIi-LI-7CV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1729" y="122"/>
+        </scene>
         <!--To-do List-->
         <scene sceneID="54E-3v-SsP">
             <objects>
@@ -48,7 +86,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f8h-lz-MVH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1771.0144927536232" y="121.875"/>
+            <point key="canvasLocation" x="2538" y="122"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Eff-CU-anZ">
@@ -65,7 +103,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="GTk-XX-oCL" kind="relationship" relationship="rootViewController" id="eWz-Yv-8hj"/>
+                        <segue destination="b3Z-nV-408" kind="relationship" relationship="rootViewController" id="pEG-bM-dxF"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gzm-Y8-lMs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
