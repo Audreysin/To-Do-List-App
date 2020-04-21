@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import SwipeCellKit
 
 class TodoListViewController: UITableViewController {
     
@@ -16,6 +17,7 @@ class TodoListViewController: UITableViewController {
         // the code in this block gets executed when the variable gets assigned a value
         didSet {
             loadItems()
+            tableView.rowHeight = 80.0
         }
     }
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -23,7 +25,6 @@ class TodoListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         loadItems()
     }
     
@@ -38,15 +39,21 @@ class TodoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // Returns a reusable tableview cell object for the specified reused identifier and adds it to the table
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath) as! SwipeTableViewCell
         
         cell.textLabel?.text = itemArray[indexPath.row].title
         
         cell.accessoryType = itemArray[indexPath.row].done ? .checkmark : .none
+        cell.delegate = self
         
         return cell
     }
     
+    //    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    //        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! SwipeTableViewCell
+    //        cell.delegate = self
+    //        return cell
+    //    }
     //MARK: - TABLEVIEW DELEGATE METHOD
     
     // tells the delegate that the row is now selected
@@ -68,6 +75,8 @@ class TodoListViewController: UITableViewController {
         // deselect the given row with an option for animation. This will prevent the cell from remaining grey after click
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+
 
     //MARK: - ADD NEW ITEMS
     
@@ -136,12 +145,15 @@ class TodoListViewController: UITableViewController {
     }
     
     func loadItems(with request : NSFetchRequest<Item> = Item.fetchRequest(), predicate : NSPredicate? = nil) {
+        
         let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
         
         if let additionalPredicate = predicate {
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [additionalPredicate, categoryPredicate])
+            print("Detected existing query")
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
         } else {
             request.predicate = categoryPredicate
+            print("Not detected")
         }
         
         do {
@@ -159,12 +171,11 @@ extension TodoListViewController: UISearchBarDelegate {
         
         let request : NSFetchRequest<Item> = Item.fetchRequest()
         
-        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        let newpredicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
      
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-        loadItems(with: request, predicate: predicate)
-
+        loadItems(with: request, predicate: newpredicate)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -175,4 +186,28 @@ extension TodoListViewController: UISearchBarDelegate {
             }
         }
     }
+}
+
+// MARK: - Swipe Cell Delegate Method
+extension TodoListViewController: SwipeTableViewCellDelegate {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            self.context.delete(self.itemArray[indexPath.row])
+            do {
+                try self.context.save()
+            } catch {
+                print("Error: \(error)")
+            }
+            self.itemArray.remove(at: indexPath.row)
+            self.tableView.reloadData()
+        }
+
+        // customize the action appearance
+        deleteAction.image = UIImage(named: "trash-icon")
+
+        return [deleteAction]
+    }
+    
 }

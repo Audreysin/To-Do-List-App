@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import SwipeCellKit
 
 class CategoryViewController: UITableViewController {
     
@@ -18,6 +19,7 @@ class CategoryViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadList()
+        tableView.rowHeight = 80.0
     }
     
     //MARK: - Add New Category
@@ -58,14 +60,20 @@ class CategoryViewController: UITableViewController {
     // Ask the datasource to insert a cell at a particular location on the TableView
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)//Reusable cell
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! SwipeTableViewCell//Reusable cell
         cell.textLabel?.text = categoryArray[indexPath.row].name
+        
+        cell.delegate = self
         
         return cell
         
     }
     
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! SwipeTableViewCell
+//        cell.delegate = self
+//        return cell
+//    }
     
     //MARK: - Data Manipulation Methods
     
@@ -108,4 +116,28 @@ class CategoryViewController: UITableViewController {
             destinationVC.selectedCategory = categoryArray[indexPath.row]
         }
     }
+}
+
+// MARK: - Swipe Cell Delegate Method
+extension CategoryViewController: SwipeTableViewCellDelegate {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            self.context.delete(self.categoryArray[indexPath.row])
+            do {
+                try self.context.save()
+            } catch {
+                print("Error: \(error)")
+            }
+            self.categoryArray.remove(at: indexPath.row)
+            self.tableView.reloadData()
+        }
+
+        // customize the action appearance
+        deleteAction.image = UIImage(named: "trash-icon")
+
+        return [deleteAction]
+    }
+    
 }
