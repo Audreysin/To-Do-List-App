@@ -150,17 +150,18 @@ class TodoListViewController: UITableViewController {
         
         if let additionalPredicate = predicate {
             print("Detected existing query")
-            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+//            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+            request.predicate =  NSCompoundPredicate(type: .and, subpredicates: [categoryPredicate, additionalPredicate])
         } else {
             request.predicate = categoryPredicate
             print("Not detected")
         }
-        
         do {
             itemArray = try context.fetch(request)
         } catch {
             print("Error fetching data from context \(error)")
         }
+        tableView.reloadData()
     }
 }
 
