@@ -1,6 +1,6 @@
 # To-Do-List-App
 
-iOS app implemented in Swift using table views, core data.
+iOS app implemented in Swift using table views and core data.
 
 ![Image of categories screen](https://github.com/Audreysin/To-Do-List-App/blob/master/categories.png)
 ![Image of to-do list screen](https://github.com/Audreysin/To-Do-List-App/blob/master/item%20list.png)
